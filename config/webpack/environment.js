@@ -1,3 +1,10 @@
-const { environment } = require('@rails/webpacker')
+const webpack = require('webpack')
+const { resolve } = require('path')
+const { environment, config } = require('@rails/webpacker')
 
-module.exports = environment
+environment.plugins.append('ContextReplacement',
+  new webpack.ContextReplacementPlugin(
+    /angular(\\|\/)core(\\|\/)(@angular|esm5)/,
+    resolve(config.source_path)
+  )
+)
